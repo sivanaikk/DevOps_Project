@@ -1,0 +1,23 @@
+---
+# tasks file for elastic-search
+#
+- name: configure elastic-search repository 
+  copy: 
+    src: elasticsearch.repo
+    dest: /etc/yum.repos.d/
+
+- name: import elastic search gpg key 
+  command: "rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch"
+
+- name: Install elastic search 
+  package: 
+    name: elasticsearch
+    state: present
+    enabled: yes
+
+
+
+
+
+  
+

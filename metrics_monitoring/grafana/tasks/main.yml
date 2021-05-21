@@ -1,0 +1,18 @@
+---
+# tasks file for grafana
+- name: configure yum repository 
+  copy: 
+    src: grafana.repo
+    dest: /etc/yum.repos.d/grafana.repo
+
+- name: Install Grafana
+  package: 
+    name: grafana
+    state: present 
+
+- name: Start and Enable Grafana 
+  service: 
+    name: grafana-server
+    state: started
+    enabled: yes
+

@@ -1,0 +1,32 @@
+---
+# tasks file for jenkins-master
+#
+- name: "Install Java and GIT"
+  yum:
+    name: "java"
+    state: "present"
+  with_items:
+    - java
+    - git
+
+- name: "Add Jenkins repository"
+  get_url:
+    url: "https://pkg.jenkins.io/redhat-stable/jenkins.repo"
+    dest: "/etc/yum.repos.d/jenkins.repo"
+
+- name: "Import Jenkins key"
+  command: "rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key"
+  changed_when: false
+
+- name: "Install Jenkins"
+  yum:
+    name: jenkins
+    state: present
+
+- name: "Start Jenkins"    
+  service: 
+    name: jenkins
+    state: started 
+    enabled: yes
+
+

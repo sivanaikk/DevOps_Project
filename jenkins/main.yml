@@ -1,0 +1,9 @@
+- hosts: JenkinsMaster
+  roles: 
+  - role: jenkins-master
+
+- hosts: JenkinsAgent
+  roles: 
+  - role: jenkins-agent
+
+

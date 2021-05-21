@@ -1,0 +1,4 @@
+- hosts: MetricsMonitoring 
+  roles: 
+  - role: prometheus 
+  - role: grafana

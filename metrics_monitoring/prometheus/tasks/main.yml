@@ -1,0 +1,21 @@
+---
+# tasks file for prometheus
+- name: Download prometheus 
+  get_url: 
+    url: https://github.com/prometheus/prometheus/releases/download/v2.27.0/prometheus-2.27.0.linux-amd64.tar.gz
+    dest: .
+- name: make /prometheus directory 
+  file: 
+    path: /prometheus 
+    state: directory 
+
+- name: Unarchive Prometheus
+  unarchive: 
+    src: prometheus-2.27.0.linux-amd64.tar.gz
+    dest: /prometheus
+
+- name: Download Prometheus Node Exporter
+  get_url: 
+    url: 
+    dest: .
+

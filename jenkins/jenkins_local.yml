@@ -1,0 +1,4 @@
+- hosts: localhosts
+  tasks: 
+    name: Jenkins Jobs 
+    
