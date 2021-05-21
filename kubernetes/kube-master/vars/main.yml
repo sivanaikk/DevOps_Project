@@ -1,0 +1,7 @@
+---
+# vars file for kube-master
+clusterNetwork: 10.240.0.0/16
+ubuntuUser: ubuntu
+redhatUser: ec2-user
+
+

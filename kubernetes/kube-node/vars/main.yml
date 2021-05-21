@@ -1,0 +1,6 @@
+---
+# vars file for kube-node
+#
+ubuntuUser: ubuntu
+redhatUser: ec2-user
+

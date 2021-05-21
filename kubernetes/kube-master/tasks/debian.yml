@@ -1,0 +1,55 @@
+---
+# Debian Tasks go here
+  - remote_user: ubuntu
+  - name: Install Docker
+    apt: 
+      name: docker.io
+      state: present
+
+  - name: Start docker service
+    service: 
+      name: docker
+      state: started
+      enabled: yes
+    
+  - name: Update and upgrade apt packages
+    become: true
+    apt:
+      upgrade: yes
+      update_cache: yes
+
+  - name: Install Required Software
+    package: 
+      name: 
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      state: present
+  - name: Download the Google Cloud public signing key
+    get_url: 
+      url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+      dest: /usr/share/keyrings/kubernetes-archive-keyring.gpg
+
+  - name: Add the Kubernetes apt repository
+    apt_repository:
+      repo: "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main"
+      state: present
+      filename: kubernetes
+
+  - name: Update and upgrade apt packages
+    become: true
+    apt:
+      upgrade: yes
+      update_cache: yes
+     
+  - name: Hold kubeadm
+    dpkg_selections:
+      name: 
+      - kubelet
+      - kubeadm
+      - kubectl 
+      selection: hold
+
+  
+  
+
