@@ -1,0 +1,25 @@
+- hosts: localhost
+  tasks: 
+  - name: Configuring AWS Dynamic Inventory
+    copy: 
+      src: "{{ item }}"
+      dest: /etc/ansible
+    with_items: 
+      - inventory/ec2.py
+      - inventory/ec2.ini
+      - inventory/ansible.cfg
+      - inventory/README.md
+
+  - name: Make Dynamic Inventory files Executable 
+    file: 
+      dest: "{{ item }}"
+      mode: a+x
+    with_items: 
+      - /etc/ansible/ec2.py
+      - /etc/ansible/ec2.ini
+   
+  - debug: 
+      msg: "UPLOAD private key and  ENTER THE PATH to private_key_file: in file /etc/ansible.cfg"
+
+ 
+   
