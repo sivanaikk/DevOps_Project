@@ -9,6 +9,7 @@
       - inventory/ec2.ini
       - inventory/ansible.cfg
       - inventory/README.md
+      - ./../infra/devops_keypair.pem
 
   - name: Make Dynamic Inventory files Executable 
     file: 
@@ -18,8 +19,26 @@
       - /etc/ansible/ec2.py
       - /etc/ansible/ec2.ini
    
-  - debug: 
-      msg: "UPLOAD private key and  ENTER THE PATH to private_key_file: in file /etc/ansible.cfg"
+  - name: changing file permission
+    file:
+      dest: "{{ item }}"
+      mode: 0400 
+      owner: ec2-user
+    with_items:
+      - /etc/ansible/devops_keypair.pem
+  - name: changing file permission
+    file:
+      dest: "{{ item }}"
+      mode: 0600
+    with_items:
+      - $HOME/.ssh/authorized_keys
+
+
+
+  - name: copy the keypair to the ansible configiration directory 
+    copy: 
+      src: ./../infra/devops_keypair.pem
+      dest: /etc/ansible/devops_keypair.pem
 
  
    
