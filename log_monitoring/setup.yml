@@ -1,0 +1,4 @@
+- hosts: tag_Name_ELK
+  roles:
+  - role: elastic-search
+

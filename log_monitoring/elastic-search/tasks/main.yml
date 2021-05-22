@@ -1,19 +1,60 @@
 ---
 # tasks file for elastic-search
 #
-- name: configure elastic-search repository 
-  copy: 
-    src: elasticsearch.repo
-    dest: /etc/yum.repos.d/
 
-- name: import elastic search gpg key 
-  command: "rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch"
+  - name: Configure Docker Repository
+    yum_repository:
+      description: DOCKER YUM repo
+      name: docker
+      baseurl: https://download.docker.com/linux/centos/7/x86_64/stable/
+      gpgcheck: no
+      state: present
+  - name: Install Docker
+    package:
+      name: docker-ce-18.09.1-3.el7.x86_64
+      skip_broken: yes
+      state: present
+  - name: Start Docker Service 
+    service:
+      name: docker
+      state: started
+      enabled: yes
+  - name: Copy File of ELK Docker-Compose
+    copy: 
+      src: elk-stack
+      dest: /home/ec2-user/
+  - name: Install required packages
+    package: 
+      name: 
+      - python3-pip
+      - gcc 
+      - libffi-devel
+      - python3-devel
+      - openssl-devel
+      state: present
 
-- name: Install elastic search 
-  package: 
-    name: elasticsearch
-    state: present
-    enabled: yes
+  - name: Install docker-py
+    pip: 
+      name: docker-py
+
+  - name: Install docker-compose
+    pip:
+      name: docker-compose
+
+  - name: Install docker-compose
+    pip:
+      name: setuptools-rust
+
+  - name: Download Docker compose
+    get_url: 
+      url: https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64
+      dest: /usr/local/bin/docker-compose
+      mode: a+x 
+  
+  - name: Create and start services
+    docker_compose:
+      project_src: /home/ec2-user/elk-stack
+    register: output
 
 
 
