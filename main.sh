@@ -39,11 +39,21 @@ fi
 echo "Requirement Done..."
 
 pip3 install python-jenkins
-pip3 install boto3
+pip3 install boto
+pip3 install ec2
 
-cd ./infra << EOF
-	terraform plan
-EOF
+# Create Infrastructure...
+
+echo "Provisioning the Resources with Terraform..." 
+
+terraform  -chdir=infra  apply -auto-approve
+
+# Configuring Dynamic Inventory 
+
+ansible-playbook   ansible/config_dynamic_inventory.yml
+
+ansible-playbook  ansible/ansible_main.yml
+
 
 
 	
