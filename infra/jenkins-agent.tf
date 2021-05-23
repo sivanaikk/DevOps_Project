@@ -19,7 +19,16 @@ resource "aws_security_group" "jenkins_agent_sg" {
         protocol = "-1"
         to_port = 0
     }
-    
+
+    ingress {
+        cidr_blocks = ["0.0.0.0/0"]
+        ipv6_cidr_blocks = ["::/0"]
+        description = "Kuberntes Master Ingress from API Server"
+        from_port = 22
+        protocol = "tcp"
+        to_port = 22
+    }
+
     egress {
     from_port        = 0
     to_port          = 0

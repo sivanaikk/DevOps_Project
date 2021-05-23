@@ -34,6 +34,14 @@ resource "aws_security_group" "logs_sg" {
         protocol = "tcp"
         to_port = 5601
     }
+    ingress {
+        cidr_blocks = ["0.0.0.0/0"]
+        ipv6_cidr_blocks = ["::/0"]
+        description = "Kuberntes Master Ingress from API Server"
+        from_port = 22
+        protocol = "tcp"
+        to_port = 22
+    }
 
     egress {
     from_port        = 0

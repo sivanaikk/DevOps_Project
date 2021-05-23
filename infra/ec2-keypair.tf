@@ -19,7 +19,7 @@ resource "null_resource" "save_private_key" {
     aws_key_pair.generated_key
   ]
   provisioner "local-exec" {
-    command = "echo '${tls_private_key.private_key.private_key_pem}' >  ./'${aws_key_pair.generated_key.key_name}'.pem "
+    command = "echo '${tls_private_key.private_key.private_key_pem}'  > devops_keypair.pem"
   }
 }
 
